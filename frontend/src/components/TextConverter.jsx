@@ -58,7 +58,7 @@ const TextConverter = ({ setIsLoading }) => {
             }} 
           />
         </div>
-        <span className="text-center text-2xl font-bold tracking-wide" style={{ textShadow: '2px 2px 0 rgba(0,0,0,0.2)' }}>BARDIFY YOUR TEXT</span>
+        <span className="text-center text-2xl font-bold tracking-wide text-ink" style={{ textShadow: '2px 2px 0 rgba(0,0,0,0.2)' }}>BARDIFY YOUR TEXT</span>
         <div className="floating-element" style={{ animationDelay: '0.5s' }}>
           <img 
             src={inkpot} 
@@ -124,40 +124,22 @@ const TextConverter = ({ setIsLoading }) => {
         </div>
       )}
       
-      <div className="mt-8 text-center flex flex-col items-center">
-        <div className="relative">
-          <button
-            onClick={handleTranslate}
-            className="relative w-60 h-16 flex items-center justify-center border-4 border-brown-800 bg-parchment-light"
-            style={{ 
-              boxShadow: '4px 4px 0 rgba(0,0,0,0.3)',
-              imageRendering: 'pixelated'
-            }}
-            aria-label="Translate text"
-          >
-            <span 
-              className="text-ink font-bold tracking-wide"
-              style={{ 
-                fontFamily: 'Press Start 2P', 
-                fontSize: '1.2rem',
-                textShadow: '1px 1px 0 rgba(0,0,0,0.2)'
-              }}
-            >
-              BARDIFY
-            </span>
-          </button>
-        </div>
-        
-        <div 
-          className="mt-2 px-4 py-2 bg-candlelight text-ink border-2 border-brown-800"
-          style={{ 
-            fontFamily: 'Press Start 2P', 
-            fontSize: '0.6rem',
-            boxShadow: '2px 2px 0 rgba(0,0,0,0.3)'
-          }}
+      <div className="mt-8 text-center">
+        <button
+          onClick={handleTranslate}
+          className="transition-all hover:scale-110 active:scale-95 relative group"
+          aria-label="Translate text"
         >
-          CLICK TO TRANSLATE
-        </div>
+          <img 
+            src={bardifyButton} 
+            alt="Bardify" 
+            className="h-32 cursor-pointer relative z-10" 
+            style={{ 
+              imageRendering: 'pixelated',
+              filter: 'drop-shadow(0 0 10px rgba(0, 0, 0, 0.7))'
+            }} 
+          />
+        </button>
       </div>
     </section>
   );
