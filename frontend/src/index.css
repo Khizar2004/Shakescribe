@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=IM+Fell+English:ital@0;1&family=Press+Start+2P&family=Pixelify+Sans&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    image-rendering: pixelated;
+  }
+  
+  body {
+    @apply bg-parchment dark:bg-ink text-ink dark:text-parchment;
+    font-family: 'IM Fell English', serif;
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB7UlEQVR4nGNgIBEUp6Rs+J+SMg8oxpCSkgkSS01NYkhKSgLLpaWlQeUJqEdXnJRUAzT0e1JSzP/U1NNAXA0Wh0iCxAk7IynpP0jzpKSY/0nJv5OSYsCGwDFEHKoWxTCoAbGx//9v3/7/f1LS//9JSf+B+A9QfC5YAUQcqgaqFmoA0ID/W7f+BxnwPynpP8gQmEEgMagyqFqoWpBaPwagtP8A+hmKY4Hi8UAD/v5PTfkNNHBiTEzM/5iYmP+xsbH/QWxQGEDVQNWC1IMNiIn5/z8t7T/QgLn/k5L+gBQCFf6BMcBiYANSFgINqAKGgT5ULUg9mhvS/yclNf5PSooB+wkUDkDDYv+npGz6n5ICkXsBTA+IASQwhoGBBmJAAYMBpJABaBMDUONEYIj8B4ZEMtA134GGfQXiL1BXfQbiz0B5UADCYgGqByQOYYPErly5ArSkACjxGojnAbE9Wkz0A8W+QuWnA8UboGpBekB6QXoZjh496gCUeAQ0ZB4QVwLxYiA+AMRPQAZB2SA2SA4kB1UL0gPSy3DkyBF/oMS1AxcuPAJiV5ABQBwJxDOA+AEQP4GGBYgNkoOqpZoBe/bsAUfn4cOH/x84cOD//v37/wMDFcwGsUFyULXUMwAZgMIAVQwQG0OB+QYAB25k62fsJl8AAAAASUVORK5CYII="), auto;
+  }
+  
+  button, a, input, textarea {
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAACkUlEQVR4nGWSXUiTURjH/+e8H+/eXW5uuunczK3NuWm5Mk0zwpAkuhDCm4gu+oC+oJvAboKgwOiiEoRuiiAKEhJMiEoxKjfNlUlfc8PNbW5+bO/e7e37nosuok7dcJ7zO//zO+f/P4QxtNvt1O/3nyyXy4cA7GeM1RHCBADIsgzGWAGAkyRJGkBEOTg4+H1kZOQNY8zMNhtJWSwWq81mO2c0Gq8bjcYQIUQRBAGEEFBK831CEAwGA5LJJPR6/d1yuXwvFAp9IrZQaMRms13XarU3CCHVbDbLuQJP2fM8RQiBRqMBz/MQRRGpVGrNYDCMpFKpCIlEImcEQThfqVQYl3JKv98vAZgkhKDRaAQpFAoQBAGiKILjONA0DZ/PB71eD6vV2lYul/UkGAwO8TzvpSgKtVqNZLNZiMVi+zGDjDGQSqUCwzCgKAoGgwFKpRIURYGiKOh0OlgsFiQSiZCnq2sgNDl5/2fUhyqATGzj+Th+Ly5iJZnchF6vB8dxYIxBJpOBpmlwHAeO4yAIAqrVKhaXljDkcPyaGBm5R5LJpFahUDSVSiWoVCrk8lsbGzA5XIhlUqBZVmo1WpsbW0hk8nAaDRCo9FAJpMBgEW5Wl31+/2YnZ29QjKZDBhjUCqV2NnZweLiItxuN9rb2+Hz+SCVSsGy7J4CY9jd3YXZbAYRBBSLRfA8D6JQKLCysoKuri54PB6srq6CZdlmEHO5HLLZLERRhEwmw4cPc3A6nZc7OjqQiEa9JB6Po1QqYXt7G9FoFGtra+jv74fb7cbS0hJSqRR8Ph9isRgsFgtEUUS1VsOfpiZEtrawtrbGk0gkQpubm8hms4hEIlhfX0dvby96enpw+vRpnDlzBpZWK8KhENra2sAYA2UMnBQ4cqgF3c5OnDxxAv8A+n787G8wWMAAAAAASUVORK5CYII="), pointer;
+  }
+}
+
+@layer components {
+  .pixel-border {
+    @apply border-4 border-ink dark:border-parchment shadow-pixel;
+    image-rendering: pixelated;
+    position: relative;
+  }
+  
+  .pixel-border::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .pixel-border:hover::before {
+    @apply border-2 border-candlelight;
+  }
+  
+  .pixel-button {
+    @apply px-4 py-3 bg-scroll text-ink hover:brightness-110 active:brightness-90
+    transition-all duration-150 font-bold
+    hover:shadow-pixel-glow hover:scale-105 active:scale-95;
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+    border: 4px solid #2a2a2a;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-area {
+    @apply w-full h-64 p-4 rounded-none text-ink dark:text-parchment resize-none
+    focus:outline-none focus:shadow-pixel-glow
+    font-medium;
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    background-color: rgba(245, 240, 225, 1);
+    border: 4px solid #2a2a2a;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark .text-area {
+    background-color: rgba(42, 42, 42, 1);
+    border: 4px solid #f5f0e1;
+  }
+  
+  .pixel-input {
+    @apply w-full p-3 rounded-none text-ink dark:text-parchment
+    focus:outline-none focus:shadow-pixel-glow
+    font-medium;
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+    background-color: rgba(245, 240, 225, 1);
+    border: 4px solid #2a2a2a;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark .pixel-input {
+    background-color: rgba(42, 42, 42, 1);
+    border: 4px solid #f5f0e1;
+  }
+  
+  .pixel-panel {
+    position: relative;
+    transition: all 0.3s ease;
+    border: 4px solid #2a2a2a;
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.3);
+  }
+  
+  .pixel-panel:hover {
+    @apply shadow-pixel-glow;
+  }
+  
+  .pixel-header {
+    font-family: 'Press Start 2P', cursive;
+    @apply text-2xl mb-4 text-ink dark:text-parchment font-bold;
+    line-height: 1.4;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+  
+  .pixel-spinner {
+    @apply animate-spin;
+    image-rendering: pixelated;
+  }
+  
+  .floating-element {
+    @apply animate-float;
+  }
+  
+  .glowing-element {
+    @apply animate-pulse-glow;
+  }
+  
+  /* Custom animations */
+  @keyframes loading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+  }
+  
+  @keyframes pixel-spin {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
+  }
+} 
