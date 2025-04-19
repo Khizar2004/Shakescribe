@@ -53,64 +53,55 @@ const SonnetGenerator = ({ setIsLoading }) => {
   }, [isScrollOpen]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 px-4">
+    <div className="flex flex-col items-center justify-center py-8 px-4">
       <div className="w-full max-w-4xl transform transition-all hover:translate-y-[-2px] relative">
-        {/* Decorative Top Elements */}
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex gap-4 z-10">
-          <img 
-            src={inkpot} 
-            alt="Inkpot" 
-            className="h-16 animate-float" 
-            style={{ filter: 'drop-shadow(0 8px 4px rgba(0,0,0,0.3))' }}
-          />
-        </div>
-
         {/* Main Scroll Container */}
         <div 
-          className="flex flex-col items-center relative transform rotate-1 transition-transform duration-300 hover:rotate-0"
+          className="flex flex-col items-center relative"
           style={{
             backgroundImage: `url(${longScrollBg})`,
             backgroundSize: '100% 100%',
             backgroundPosition: 'center top',
             backgroundRepeat: 'no-repeat',
-            imageRendering: 'crisp-edges',
-            paddingTop: '140px',
-            paddingBottom: '140px',
+            imageRendering: 'pixelated',
+            paddingTop: '90px',
+            paddingBottom: '180px',
             paddingLeft: '80px',
             paddingRight: '80px',
-            minHeight: isScrollOpen ? '1100px' : '650px',
+            minHeight: isScrollOpen ? '1200px' : '650px',
             filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.25))',
           }}
         >
           <div className="w-full max-w-2xl">
-            {/* Enhanced Header */}
+            {/* Header */}
             <h2 
-              className="text-center text-ink relative -mt-24"
+              className="text-center text-ink relative -mt-10"
               style={{ 
-                fontFamily: "'Crimson Text', serif",
-                fontSize: '3.2rem',
+                fontFamily: "'Press Start 2P', cursive",
+                fontSize: '2.2rem',
                 fontWeight: 'bold',
                 textShadow: '4px 4px 0 rgba(0,0,0,0.2)',
                 letterSpacing: '3px',
-                transform: 'translateY(-20px)',
-                color: '#2a2a2a'
+                color: '#2a2a2a',
+                transform: 'translateY(5px)'
               }}
             >
-              <span className="block text-3xl mb-1" style={{ fontFamily: "'MedievalSharp', cursive" }}>✧ The</span>
-              SONNET SCROLL
+              <span className="block text-xl mb-1">✧</span>
+              THE SONNET SCROLL
+              <span className="block text-xl mt-1">✧</span>
             </h2>
 
             {/* Input Section */}
             <div className="flex flex-col w-full items-center space-y-6 mt-10">
               <label 
                 htmlFor="sonnet-topic" 
-                className="block mb-4 px-4 py-3 bg-opacity-80 bg-parchment w-full text-center transition-all hover:scale-105"
+                className="block mb-4 px-4 py-3 bg-opacity-80 bg-parchment w-full text-center text-always-dark"
                 style={{ 
-                  fontFamily: "'Crimson Pro', serif",
-                  fontSize: '1.4rem',
-                  border: '3px solid #2a2a2a',
+                  fontFamily: "'Press Start 2P', cursive",
+                  fontSize: '1rem',
+                  border: '4px solid #2a2a2a',
                   borderRadius: '8px',
-                  boxShadow: '8px 8px 0px 0px rgba(0, 0, 0, 0.2)'
+                  boxShadow: '6px 6px 0px 0px rgba(0, 0, 0, 0.2)'
                 }}
               >
                 What shall I write about?
@@ -119,7 +110,7 @@ const SonnetGenerator = ({ setIsLoading }) => {
               <input
                 id="sonnet-topic"
                 type="text"
-                className="w-full transition-all focus:scale-102"
+                className="w-full text-always-dark hover:scale-[1.02] transition-transform"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="Enter a topic..."
@@ -128,48 +119,50 @@ const SonnetGenerator = ({ setIsLoading }) => {
                   border: '4px solid #2a2a2a',
                   borderRadius: '6px',
                   padding: '1rem',
-                  fontFamily: "'Crimson Pro', serif",
-                  fontSize: '1.2rem',
+                  fontFamily: "'Press Start 2P', cursive",
+                  fontSize: '1rem',
                   boxShadow: '6px 6px 0px 0px rgba(0, 0, 0, 0.2)',
                   transition: 'all 0.3s ease',
                   outline: 'none'
                 }}
               />
 
-              {/* Enhanced Generate Button */}
+              {/* Generate Button */}
               <button
                 onClick={handleGenerateSonnet}
-                className="transition-all hover:scale-110 active:scale-95 relative group mb-8"
+                className="transition-all hover:scale-110 active:scale-95 relative group mb-8 mt-6"
                 aria-label="Generate sonnet"
               >
-                <div className="absolute inset-0 bg-gold-500 blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 <img 
                   src={sonnetButton} 
                   alt="Generate Sonnet" 
-                  className="h-24 cursor-pointer relative z-10 hover:brightness-110" 
+                  className="h-36 cursor-pointer relative z-10 hover:brightness-110" 
                   style={{ 
-                    imageRendering: 'crisp-edges',
+                    imageRendering: 'pixelated',
                     filter: 'drop-shadow(0 0 15px rgba(0, 0, 0, 0.5))'
                   }} 
                 />
-                <div className="absolute inset-0 animate-shine opacity-0 group-hover:opacity-30"></div>
+                <div className="absolute inset-0 bg-amber-400/20 blur-xl group-hover:opacity-50 transition-opacity"></div>
               </button>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="mt-6 p-4 bg-red-500/90 border-4 border-red-700 text-center backdrop-blur-sm rounded-lg" 
+              <div className="mt-6 p-4 bg-red-600 border-4 border-red-800 text-center rounded-lg" 
                    style={{ 
                      boxShadow: '6px 6px 0 rgba(0,0,0,0.3)',
-                     animation: 'errorShake 0.4s ease'
+                     position: 'relative'
                    }}>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-600 border-4 border-red-800 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">!</span>
+                </div>
                 <p style={{ 
-                  fontFamily: "'Crimson Pro', serif", 
-                  fontSize: '1.1rem', 
+                  fontFamily: "'Press Start 2P', cursive", 
+                  fontSize: '0.8rem', 
                   color: 'white',
                   textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
                 }}>
-                  ✖ {error}
+                  {error}
                 </p>
               </div>
             )}
@@ -178,24 +171,28 @@ const SonnetGenerator = ({ setIsLoading }) => {
             {(isScrollOpen || isUnfolding) && (
               <div 
                 ref={scrollRef}
-                className={`w-full transition-all duration-1000 ease-in-out mt-8
-                           ${isUnfolding ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+                className={`w-full transition-all duration-1000 ease-in-out mt-6 mb-16 p-6 bg-parchment/90 border-4 border-ink
+                         ${isUnfolding ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}
+                style={{
+                  borderColor: "#2a2a2a",
+                  borderRadius: "4px",
+                  boxShadow: "6px 6px 0px 0px rgba(0, 0, 0, 0.3)"
+                }}
               >
                 <h3 
-                  className="text-3xl font-bold mb-6 text-center text-ink"
+                  className="text-2xl font-bold mb-6 text-center text-always-dark"
                   style={{ 
-                    fontFamily: "'Crimson Text', serif",
-                    textShadow: '3px 3px 6px rgba(0,0,0,0.15)',
-                    letterSpacing: '1px'
+                    fontFamily: "'Press Start 2P', cursive",
+                    textShadow: '2px 2px 0 rgba(0,0,0,0.2)'
                   }}
                 >
                   A Sonnet on {currentSonnetTopic}
                 </h3>
                 
-                <div className="text-center text-ink text-2xl mb-4 opacity-75">❝</div>
+                <div className="text-center text-ink text-2xl mb-4 opacity-75 text-always-dark">❝</div>
                 
                 <div 
-                  className="whitespace-pre-line mx-auto text-center leading-relaxed"
+                  className="whitespace-pre-line mx-auto text-center leading-relaxed text-always-dark"
                   style={{ 
                     fontFamily: "'Crimson Text', serif",
                     fontSize: '1.25rem',
@@ -207,13 +204,13 @@ const SonnetGenerator = ({ setIsLoading }) => {
                   {sonnet}
                 </div>
                 
-                <div className="text-center text-ink text-2xl mt-4 opacity-75">❞</div>
+                <div className="text-center text-ink text-2xl mt-4 opacity-75 text-always-dark">❞</div>
                 
-                <div className="flex justify-end w-full pr-8 mt-10 animate-quillGlide">
+                <div className="flex justify-end w-full pr-8 mt-10">
                   <img 
                     src={quill} 
                     alt="Quill signature" 
-                    className="h-14 transform -rotate-12" 
+                    className="h-12 transform -rotate-12" 
                     style={{ 
                       filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.4))',
                       transition: 'transform 0.3s ease'
@@ -224,37 +221,7 @@ const SonnetGenerator = ({ setIsLoading }) => {
             )}
           </div>
         </div>
-
-        {/* Ambient Lighting */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-amber-300/20 rounded-full blur-3xl mix-blend-multiply"></div>
-          <div className="absolute top-1/3 right-1/4 w-32 h-32 bg-blue-300/15 rounded-full blur-2xl mix-blend-multiply"></div>
-        </div>
       </div>
-
-      {/* Global Animations */}
-      <style>{`
-        @keyframes errorShake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-6px); }
-          75% { transform: translateX(6px); }
-        }
-        @keyframes quillGlide {
-          0% { transform: translateX(20px) rotate(-12deg); }
-          100% { transform: translateX(0) rotate(-12deg); }
-        }
-        .animate-quillGlide {
-          animation: quillGlide 1.2s ease-out;
-        }
-        .animate-shine {
-          background: linear-gradient(45deg,
-            transparent 25%,
-            rgba(255,255,255,0.3) 50%,
-            transparent 75%
-          );
-          background-size: 200% 200%;
-        }
-      `}</style>
     </div>
   );
 };

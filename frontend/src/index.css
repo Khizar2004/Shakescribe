@@ -21,6 +21,18 @@
 }
 
 @layer components {
+  /* Text that should always remain dark, even in dark mode */
+  .text-always-dark {
+    color: #2a2a2a !important;
+  }
+  
+  /* Parchment backgrounds that should keep dark text in dark mode */
+  .dark .bg-parchment .text-ink,
+  .dark .bg-scroll .text-ink,
+  .dark [style*="background-image: url("] .text-ink {
+    color: #2a2a2a !important;
+  }
+  
   .pixel-border {
     @apply border-4 border-ink dark:border-parchment shadow-pixel;
     image-rendering: pixelated;
