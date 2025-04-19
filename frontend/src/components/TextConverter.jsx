@@ -13,7 +13,7 @@ const TextConverter = ({ setIsLoading }) => {
 
   const handleTranslate = async () => {
     if (!inputText.trim()) {
-      setError('Please enter some text to translate');
+      setError('Pray, entereth some text to translate!');
       return;
     }
 
@@ -25,7 +25,7 @@ const TextConverter = ({ setIsLoading }) => {
       const response = await translateText(inputText);
       setOutputText(response.translated_text);
     } catch (err) {
-      setError(err.message || 'Failed to translate. Please try again.');
+      setError(err.message || 'Translation failed! Try once more, good sir/madam!');
     } finally {
       setIsLoading(false);
       setTimeout(() => setAnimateQuill(false), 2000);
@@ -34,97 +34,121 @@ const TextConverter = ({ setIsLoading }) => {
 
   return (
     <section 
-      className="transform transition-all hover:translate-y-[-2px]"
+      className="transform transition-all hover:translate-y-[-2px] relative pixel-art-section"
       style={{
-        backgroundImage: `url(${scroll})`,
-        backgroundSize: '100% 100%',
+        backgroundImage: `linear-gradient(to bottom right, 
+          rgba(245, 230, 200, 0.9) 0%, 
+          rgba(245, 230, 200, 0.95) 100%),
+          url(${scroll})`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        imageRendering: 'pixelated',
-        padding: '3rem',
-        border: 'none'
+        padding: '4rem 2rem',
+        border: '6px solid #3a2c28',
+        boxShadow: `
+          12px 12px 0 rgba(0,0,0,0.2),
+          inset 3px 3px 4px rgba(255,255,255,0.3)
+        `,
+        imageRendering: 'pixelated'
       }}
     >
-      <h2 className="pixel-header flex items-center justify-center gap-3">
-        <div className={`transition-transform ${animateQuill ? 'animate-pixel-spin' : ''}`}>
+      {/* Decorative Corner Elements */}
+      <div className="absolute top-2 left-2 w-8 h-8 border-4 border-ink transform rotate-45 opacity-60"></div>
+      <div className="absolute top-2 right-2 w-8 h-8 border-4 border-ink transform rotate-45 opacity-60"></div>
+      <div className="absolute bottom-2 left-2 w-8 h-8 border-4 border-ink transform rotate-45 opacity-60"></div>
+      <div className="absolute bottom-2 right-2 w-8 h-8 border-4 border-ink transform rotate-45 opacity-60"></div>
+
+      <h2 className="pixel-header flex items-center justify-center gap-4 mb-8">
+        <div className={`relative ${animateQuill ? 'animate-quill-dip' : ''}`}>
           <img 
             src={quill} 
             alt="Quill" 
-            className="h-8 floating-element" 
+            className="h-12 floating-element" 
             style={{ 
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 4px rgba(75, 124, 176, 0.6))',
-              animationDuration: '6s'
+              filter: 'drop-shadow(0 0 8px rgba(75, 124, 176, 0.8))',
+              transform: 'rotate(-15deg)'
             }} 
           />
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4/5 h-2 bg-blue-400/30 blur-sm animate-pulse-glow"></div>
         </div>
-        <span className="text-center text-2xl font-bold tracking-wide text-ink" style={{ textShadow: '2px 2px 0 rgba(0,0,0,0.2)' }}>BARDIFY YOUR TEXT</span>
-        <div className="floating-element" style={{ animationDelay: '0.5s' }}>
+        <span className="text-center text-3xl font-bold tracking-wider text-ink" style={{ 
+          fontFamily: "'Press Start 2P', cursive",
+          textShadow: `
+            3px 3px 0 rgba(0,0,0,0.25),
+            -1px -1px 0 rgba(255,255,255,0.3)
+          `,
+          position: 'relative',
+          background: 'linear-gradient(to right, #6b4f4a, #3a2c28)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          BARDIFY THY TEXT
+        </span>
+        <div className="relative group">
           <img 
             src={inkpot} 
             alt="Inkpot" 
-            className="h-8 glowing-element" 
+            className="h-12 glowing-element transition-transform group-hover:scale-110" 
             style={{ 
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 4px rgba(42, 42, 42, 0.6))'
+              filter: 'drop-shadow(0 0 8px rgba(42, 42, 42, 0.8))'
             }} 
           />
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-full h-2 bg-amber-600/30 blur-sm animate-pulse-glow"></div>
         </div>
       </h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        <div className="flex flex-col h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-8 px-4">
+        {/* Modern English Input */}
+        <div className="flex flex-col h-full relative">
           <label 
             htmlFor="modern-text" 
-            className="block mb-3 font-medium px-3 py-2 bg-parchment dark:bg-ink-dark inline-block border-b-4 border-ink dark:border-parchment-light"
-            style={{ fontFamily: 'Press Start 2P', fontSize: '0.9rem' }}
+            className="pixel-label mb-4 transform -skew-x-6 self-start px-6 py-2 bg-parchment"
           >
-            Modern English
+            <span className="block skew-x-6">Modern English</span>
           </label>
           <textarea
             id="modern-text"
-            className="text-area flex-grow"
+            className="pixel-textarea flex-grow hover:scale-[1.02] transition-transform"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Enter your modern text here..."
-            style={{
-              backgroundColor: 'rgba(245, 240, 225, 1)',
-              border: '4px solid #2a2a2a',
-              boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.3)'
-            }}
+            placeholder="Enter thy modern text here..."
           />
+          <div className="absolute bottom-2 right-2 w-6 h-6 border-4 border-ink opacity-30"></div>
         </div>
         
-        <div className="flex flex-col h-full">
+        {/* Shakespearean Output */}
+        <div className="flex flex-col h-full relative">
           <label 
             htmlFor="shakespeare-text" 
-            className="block mb-3 font-medium px-3 py-2 bg-parchment dark:bg-ink-dark inline-block border-b-4 border-ink dark:border-parchment-light"
-            style={{ fontFamily: 'Press Start 2P', fontSize: '0.9rem' }}
+            className="pixel-label mb-4 transform skew-x-6 self-end px-6 py-2 bg-parchment"
           >
-            Shakespearean English
+            <span className="block -skew-x-6">Shakespearean</span>
           </label>
           <textarea
             id="shakespeare-text"
-            className="text-area flex-grow"
+            className="pixel-textarea flex-grow hover:scale-[1.02] transition-transform"
             value={outputText}
             readOnly
-            placeholder="Translated text will appear here..."
-            style={{
-              backgroundColor: 'rgba(245, 240, 225, 1)',
-              border: '4px solid #2a2a2a',
-              boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.3)'
-            }}
+            placeholder="Thy translated verse shall appear here..."
           />
+          <div className="absolute bottom-2 left-2 w-6 h-6 border-4 border-ink opacity-30"></div>
         </div>
       </div>
       
       {error && (
-        <div className="mt-6 p-3 bg-red-500 border-2 border-red-700 text-center" style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.3)' }}>
-          <p style={{ fontFamily: 'Press Start 2P', fontSize: '0.8rem', color: 'white' }}>{error}</p>
+        <div className="mt-8 p-4 bg-red-600 border-4 border-red-800 text-center pixel-error" style={{ 
+          boxShadow: '6px 6px 0 rgba(0,0,0,0.3)',
+          position: 'relative'
+        }}>
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 bg-red-600 border-4 border-red-800 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold">!</span>
+          </div>
+          <p className="pixel-error-text">{error}</p>
         </div>
       )}
       
-      <div className="mt-8 text-center">
+      <div className="mt-12 text-center relative">
         <button
           onClick={handleTranslate}
           className="transition-all hover:scale-110 active:scale-95 relative group"
@@ -133,16 +157,72 @@ const TextConverter = ({ setIsLoading }) => {
           <img 
             src={bardifyButton} 
             alt="Bardify" 
-            className="h-32 cursor-pointer relative z-10" 
+            className="h-44 cursor-pointer relative z-10 pixelated transition-all duration-300 group-hover:brightness-110" 
             style={{ 
               imageRendering: 'pixelated',
-              filter: 'drop-shadow(0 0 10px rgba(0, 0, 0, 0.7))'
+              filter: 'drop-shadow(0 0 20px rgba(100, 70, 40, 0.5))'
             }} 
           />
+          <div className="absolute inset-0 bg-amber-400/20 blur-xl group-hover:opacity-50 transition-opacity"></div>
         </button>
       </div>
+
+      <style jsx global>{`
+        .pixel-textarea {
+          background: rgba(245, 240, 225, 1);
+          border: 6px solid #3a2c28;
+          box-shadow: 
+            8px 8px 0px 0px rgba(0, 0, 0, 0.3),
+            inset 3px 3px 4px rgba(0,0,0,0.1);
+          padding: 1.5rem;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.9rem;
+          line-height: 1.6;
+          image-rendering: pixelated;
+          color: #2a2a2a !important;
+        }
+
+        .pixel-label {
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.8rem;
+          border: 4px solid #3a2c28;
+          box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+          background: #f5e6d3;
+          position: relative;
+          z-index: 1;
+          color: #2a2a2a !important;
+        }
+
+        .pixel-error-text {
+          font-family: 'Press Start 2P', cursive;
+          font-size: 0.8rem;
+          color: #fff;
+          text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+          margin-top: 0.5rem;
+        }
+
+        @keyframes quill-dip {
+          0%, 100% { transform: translateY(0) rotate(-15deg); }
+          50% { transform: translateY(8px) rotate(-25deg); }
+        }
+
+        .animate-quill-dip {
+          animation: quill-dip 1.5s ease-in-out infinite;
+        }
+
+        .pixel-art-section {
+          background-image: 
+            linear-gradient(to bottom right, 
+              transparent 50%, rgba(0,0,0,0.03) 50%),
+            repeating-linear-gradient(-45deg, 
+              rgba(0,0,0,0.05) 0px, 
+              rgba(0,0,0,0.05) 2px, 
+              transparent 2px, 
+              transparent 4px);
+        }
+      `}</style>
     </section>
   );
 };
 
-export default TextConverter; 
+export default TextConverter;

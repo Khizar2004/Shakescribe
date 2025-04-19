@@ -76,12 +76,7 @@ function App() {
         </div>
         
         {/* Header section with logo and title */}
-        <div className="mb-12 bg-parchment/95 dark:bg-ink/95" 
-          style={{
-            border: '4px solid #2a2a2a',
-            boxShadow: '5px 5px 0px 0px rgba(0, 0, 0, 0.3)'
-          }}
-        >
+        <div className="mb-12">
           <Header />
         </div>
         
