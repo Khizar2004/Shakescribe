@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { translateText } from '../utils/api';
+import Analytics from './Analytics';
 import bardifyButton from '../assets/bradifybutton.png';
 import quill from '../assets/quill.png';
 import inkpot from '../assets/inkpot.png';
@@ -221,6 +222,9 @@ const TextConverter = ({ setIsLoading }) => {
               transparent 4px);
         }
       `}</style>
+      
+      {/* Analytics Component */}
+      <Analytics text={inputText} translatedText={outputText} />
     </section>
   );
 };
