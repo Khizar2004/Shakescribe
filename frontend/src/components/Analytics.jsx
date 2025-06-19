@@ -244,8 +244,8 @@ const Analytics = ({ text, translatedText }) => {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={(entry) => `${entry.name}: ${entry.percentage}%`}
-                        outerRadius={80}
+                        label={(entry) => `${entry.name === 'Shakespearean' ? 'Shakespeare' : entry.name}: ${entry.percentage}%`}
+                        outerRadius={75}
                         fill="#8884d8"
                         dataKey="value"
                       >

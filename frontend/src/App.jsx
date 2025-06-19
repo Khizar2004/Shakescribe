@@ -102,7 +102,7 @@ function App() {
         >
           <p className="text-ink dark:text-parchment font-bold" 
              style={{ fontFamily: 'Press Start 2P', fontSize: '0.7rem' }}>
-            Created with <span className="text-magic-pink">❤</span> and pixel magic
+            Created with <span className="text-magic-pink">❤</span> by Khizar
           </p>
         </footer>
       </div>
