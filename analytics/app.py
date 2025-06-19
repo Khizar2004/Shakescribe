@@ -4,16 +4,99 @@ import textstat
 from collections import Counter
 import re
 from transformers import pipeline
+from sentence_transformers import SentenceTransformer
+import numpy as np
 import warnings
 
 # Suppress transformer warnings for cleaner output
 warnings.filterwarnings("ignore")
 
-# Initialize ML sentiment analyzer (loads once at startup)
+# Initialize ML models (loads once at startup)
 print("🤖 Loading ML sentiment analyzer...")
 sentiment_analyzer = pipeline("sentiment-analysis", 
                              model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 print("✅ ML sentiment analyzer ready!")
+
+print("🤖 Loading similarity model...")
+similarity_model = SentenceTransformer('all-MiniLM-L6-v2')
+print("✅ Similarity model ready!")
+
+# Curated Shakespeare quotes database
+SHAKESPEARE_QUOTES = [
+    {"quote": "To be or not to be, that is the question", "source": "Hamlet, Act 3, Scene 1", "theme": "existential"},
+    {"quote": "All the world's a stage, and all the men and women merely players", "source": "As You Like It, Act 2, Scene 7", "theme": "life philosophy"},
+    {"quote": "Romeo, Romeo, wherefore art thou Romeo?", "source": "Romeo and Juliet, Act 2, Scene 2", "theme": "love"},
+    {"quote": "What's in a name? That which we call a rose by any other name would smell as sweet", "source": "Romeo and Juliet, Act 2, Scene 2", "theme": "identity"},
+    {"quote": "All that glisters is not gold", "source": "The Merchant of Venice, Act 2, Scene 7", "theme": "appearance vs reality"},
+    {"quote": "Better three hours too soon than a minute too late", "source": "The Merry Wives of Windsor, Act 2, Scene 2", "theme": "time"},
+    {"quote": "Cowards die many times before their deaths", "source": "Julius Caesar, Act 2, Scene 2", "theme": "courage"},
+    {"quote": "Fair is foul, and foul is fair", "source": "Macbeth, Act 1, Scene 1", "theme": "deception"},
+    {"quote": "If you prick us, do we not bleed? If you tickle us, do we not laugh?", "source": "The Merchant of Venice, Act 3, Scene 1", "theme": "humanity"},
+    {"quote": "Love looks not with the eyes, but with the mind", "source": "A Midsummer Night's Dream, Act 1, Scene 1", "theme": "love"},
+    {"quote": "Now is the winter of our discontent", "source": "Richard III, Act 1, Scene 1", "theme": "dissatisfaction"},
+    {"quote": "Once more unto the breach, dear friends, once more", "source": "Henry V, Act 3, Scene 1", "theme": "courage"},
+    {"quote": "Parting is such sweet sorrow", "source": "Romeo and Juliet, Act 2, Scene 2", "theme": "separation"},
+    {"quote": "The course of true love never did run smooth", "source": "A Midsummer Night's Dream, Act 1, Scene 1", "theme": "love"},
+    {"quote": "There is nothing either good or bad, but thinking makes it so", "source": "Hamlet, Act 2, Scene 2", "theme": "perception"},
+    {"quote": "This above all: to thine own self be true", "source": "Hamlet, Act 1, Scene 3", "theme": "authenticity"},
+    {"quote": "We are such stuff as dreams are made on", "source": "The Tempest, Act 4, Scene 1", "theme": "reality"},
+    {"quote": "What is done cannot be undone", "source": "Macbeth, Act 5, Scene 1", "theme": "regret"},
+    {"quote": "When sorrows come, they come not single spies, but in battalions", "source": "Hamlet, Act 4, Scene 5", "theme": "suffering"},
+    {"quote": "Brevity is the soul of wit", "source": "Hamlet, Act 2, Scene 2", "theme": "communication"},
+    {"quote": "All's well that ends well", "source": "All's Well That Ends Well, Act 4, Scene 4", "theme": "optimism"},
+    {"quote": "The lady doth protest too much, methinks", "source": "Hamlet, Act 3, Scene 2", "theme": "deception"},
+    {"quote": "Double, double toil and trouble", "source": "Macbeth, Act 4, Scene 1", "theme": "magic"},
+    {"quote": "A rose by any other name would smell as sweet", "source": "Romeo and Juliet, Act 2, Scene 2", "theme": "essence"},
+    {"quote": "Good night, good night! Parting is such sweet sorrow", "source": "Romeo and Juliet, Act 2, Scene 2", "theme": "farewell"}
+]
+
+# Pre-compute embeddings for Shakespeare quotes (cached)
+print("🤖 Computing Shakespeare quote embeddings...")
+QUOTE_EMBEDDINGS = None
+
+def get_quote_embeddings():
+    global QUOTE_EMBEDDINGS
+    if QUOTE_EMBEDDINGS is None:
+        quotes_text = [q["quote"] for q in SHAKESPEARE_QUOTES]
+        QUOTE_EMBEDDINGS = similarity_model.encode(quotes_text)
+    return QUOTE_EMBEDDINGS
+
+# Initialize embeddings
+get_quote_embeddings()
+print("✅ Shakespeare quote embeddings ready!")
+
+def find_most_similar_quote(text):
+    """Find the most similar Shakespeare quote to the given text"""
+    if not text.strip():
+        return None
+    
+    try:
+        # Get embeddings
+        text_embedding = similarity_model.encode([text])
+        quote_embeddings = get_quote_embeddings()
+        
+        # Calculate cosine similarities
+        similarities = np.dot(text_embedding, quote_embeddings.T)[0]
+        
+        # Find best match
+        best_idx = np.argmax(similarities)
+        similarity_score = float(similarities[best_idx])
+        
+        # Convert to percentage (cosine similarity ranges from -1 to 1, we normalize to 0-100)
+        similarity_percentage = int((similarity_score + 1) * 50)
+        
+        best_quote = SHAKESPEARE_QUOTES[best_idx]
+        
+        return {
+            "quote": best_quote["quote"],
+            "source": best_quote["source"], 
+            "theme": best_quote["theme"],
+            "similarity_percentage": similarity_percentage
+        }
+        
+    except Exception as e:
+        print(f"Quote similarity error: {e}")
+        return None
 
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:5173', 'http://127.0.0.1:5173'], methods=['GET', 'POST', 'OPTIONS'], allow_headers=['Content-Type'])
@@ -151,13 +234,17 @@ def analyze_text(text):
     # Advanced Shakespearean detection
     shakespeare_score = calculate_shakespeare_score(text)
     
+    # Find most similar Shakespeare quote
+    similar_quote = find_most_similar_quote(text)
+    
     return {
         'word_count': word_count,
         'sentence_count': sentence_count,
         'avg_sentence_length': round(avg_sentence_length, 1),
         'readability_grade': round(readability, 1),
         'sentiment_score': sentiment_score,
-        'shakespeare_score': shakespeare_score
+        'shakespeare_score': shakespeare_score,
+        'similar_quote': similar_quote
     }
 
 @app.route('/analyze', methods=['POST'])
