@@ -175,6 +175,24 @@ const Analytics = ({ text, translatedText }) => {
                   color="bg-purple-100"
                 />
               </div>
+              
+              {/* Similar Shakespeare Quote */}
+              {data.similar_quote && (
+                <div className="mt-4 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border-2 border-purple-200">
+                  <h5 className="text-md font-bold text-purple-800 mb-2">
+                    📜 Most Similar Shakespeare Quote ({data.similar_quote.similarity_percentage}%)
+                  </h5>
+                  <blockquote className="text-purple-700 italic mb-2">
+                    "{data.similar_quote.quote}"
+                  </blockquote>
+                  <p className="text-sm text-purple-600">
+                    <strong>Source:</strong> {data.similar_quote.source}<br/>
+                    <span className="bg-purple-100 px-2 py-1 rounded text-xs">
+                      Theme: {data.similar_quote.theme}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
           ))}
           
