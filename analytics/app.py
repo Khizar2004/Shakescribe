@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import textstat
-from collections import Counter
+
 import re
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
@@ -51,7 +51,7 @@ SHAKESPEARE_QUOTES = [
 ]
 
 # Pre-compute embeddings for Shakespeare quotes (cached)
-print("🤖 Computing Shakespeare quote embeddings...")
+print("Computing Shakespeare quote embeddings")
 QUOTE_EMBEDDINGS = None
 
 def get_quote_embeddings():
@@ -63,7 +63,7 @@ def get_quote_embeddings():
 
 # Initialize embeddings
 get_quote_embeddings()
-print("✅ Shakespeare quote embeddings ready!")
+print("Shakespeare quote embeddings ready")
 
 def find_most_similar_quote(text):
     """Find the most similar Shakespeare quote to the given text"""
@@ -95,7 +95,6 @@ def find_most_similar_quote(text):
         }
         
     except Exception as e:
-        print(f"Quote similarity error: {e}")
         return None
 
 app = Flask(__name__)
@@ -173,7 +172,7 @@ def ml_sentiment_analysis(text):
         label = result['label']
         confidence = result['score']
         
-        print(f"DEBUG: ML result = {result}")  # Debug what we're getting
+
         
         # Handle different possible label formats
         if label.upper() in ['POSITIVE', 'POS', 'LABEL_2']:
@@ -183,12 +182,10 @@ def ml_sentiment_analysis(text):
         elif label.upper() in ['NEUTRAL', 'NEU', 'LABEL_1']:
             return 0
         else:
-            # If unknown label format, print it and use fallback
-            print(f"Unknown label format: {label}")
+            # If unknown label format, use fallback
             return simple_sentiment_fallback(text)
             
     except Exception as e:
-        print(f"ML sentiment analysis failed: {e}")
         # Fallback to simple analysis if ML fails
         return simple_sentiment_fallback(text)
 
@@ -207,7 +204,6 @@ def simple_sentiment_fallback(text):
         return 0
     
     sentiment_score = (positive_count - negative_count) / max(word_count / 10, 1)
-    print(f"DEBUG Fallback: pos={positive_count}, neg={negative_count}, score={sentiment_score}")
     return round(sentiment_score, 2)
 
 def analyze_text(text):

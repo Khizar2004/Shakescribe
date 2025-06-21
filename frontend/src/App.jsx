@@ -100,9 +100,13 @@ function App() {
             boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.3)'
           }}
         >
-          <p className="text-ink dark:text-parchment font-bold" 
-             style={{ fontFamily: 'Press Start 2P', fontSize: '0.7rem' }}>
-            Created with <span className="text-magic-pink">❤</span> by Khizar
+          <p className="font-bold" 
+             style={{ 
+               fontFamily: 'Press Start 2P', 
+               fontSize: '0.7rem',
+               color: isDarkMode ? '#f5f0e1' : '#2a2a2a'
+             }}>
+            Created with <span style={{ color: '#e91e63' }}>❤</span> by Khizar
           </p>
         </footer>
       </div>

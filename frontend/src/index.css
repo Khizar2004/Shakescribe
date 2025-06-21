@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&family=IM+Fell+English:ital@0;1&family=Press+Start+2P&family=Pixelify+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=IM+Fell+English:ital@0;1&family=Press+Start+2P&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -21,17 +21,7 @@
 }
 
 @layer components {
-  /* Text that should always remain dark, even in dark mode */
-  .text-always-dark {
-    color: #2a2a2a !important;
-  }
-  
-  /* Parchment backgrounds that should keep dark text in dark mode */
-  .dark .bg-parchment .text-ink,
-  .dark .bg-scroll .text-ink,
-  .dark [style*="background-image: url("] .text-ink {
-    color: #2a2a2a !important;
-  }
+
   
   .pixel-border {
     @apply border-4 border-ink dark:border-parchment shadow-pixel;
@@ -55,60 +45,13 @@
     @apply border-2 border-candlelight;
   }
   
-  .pixel-button {
-    @apply px-4 py-3 bg-scroll text-ink hover:brightness-110 active:brightness-90
-    transition-all duration-150 font-bold
-    hover:shadow-pixel-glow hover:scale-105 active:scale-95;
-    font-family: 'Press Start 2P', cursive;
-    image-rendering: pixelated;
-    border: 4px solid #2a2a2a;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
-  }
+
   
-  .text-area {
-    @apply w-full h-64 p-4 rounded-none text-ink dark:text-parchment resize-none
-    focus:outline-none focus:shadow-pixel-glow
-    font-medium;
-    font-family: 'VT323', monospace;
-    font-size: 1.25rem;
-    letter-spacing: 0.05em;
-    line-height: 1.4;
-    background-color: rgba(245, 240, 225, 1);
-    border: 4px solid #2a2a2a;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
-  }
+
   
-  .dark .text-area {
-    background-color: rgba(42, 42, 42, 1);
-    border: 4px solid #f5f0e1;
-  }
+
   
-  .pixel-input {
-    @apply w-full p-3 rounded-none text-ink dark:text-parchment
-    focus:outline-none focus:shadow-pixel-glow
-    font-medium;
-    font-family: 'VT323', monospace;
-    font-size: 1.25rem;
-    background-color: rgba(245, 240, 225, 1);
-    border: 4px solid #2a2a2a;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
-  }
-  
-  .dark .pixel-input {
-    background-color: rgba(42, 42, 42, 1);
-    border: 4px solid #f5f0e1;
-  }
-  
-  .pixel-panel {
-    position: relative;
-    transition: all 0.3s ease;
-    border: 4px solid #2a2a2a;
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.3);
-  }
-  
-  .pixel-panel:hover {
-    @apply shadow-pixel-glow;
-  }
+
   
   .pixel-header {
     font-family: 'Press Start 2P', cursive;
@@ -117,10 +60,7 @@
     text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
   }
   
-  .pixel-spinner {
-    @apply animate-spin;
-    image-rendering: pixelated;
-  }
+
   
   .floating-element {
     @apply animate-float;

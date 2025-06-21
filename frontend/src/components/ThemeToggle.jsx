@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import candle from '../assets/candle.gif';
 
 const ThemeToggle = ({ isDarkMode, toggleTheme }) => {

@@ -95,13 +95,14 @@ const SonnetGenerator = ({ setIsLoading }) => {
             <div className="flex flex-col w-full items-center space-y-6 mt-10">
               <label 
                 htmlFor="sonnet-topic" 
-                className="block mb-4 px-4 py-3 bg-opacity-80 bg-parchment w-full text-center text-always-dark"
+                className="block mb-4 px-4 py-3 bg-opacity-80 bg-parchment w-full text-center"
                 style={{ 
                   fontFamily: "'Press Start 2P', cursive",
                   fontSize: '1rem',
                   border: '4px solid #2a2a2a',
                   borderRadius: '8px',
-                  boxShadow: '6px 6px 0px 0px rgba(0, 0, 0, 0.2)'
+                  boxShadow: '6px 6px 0px 0px rgba(0, 0, 0, 0.2)',
+                  color: '#2a2a2a'
                 }}
               >
                 What shall I write about?
@@ -110,7 +111,7 @@ const SonnetGenerator = ({ setIsLoading }) => {
               <input
                 id="sonnet-topic"
                 type="text"
-                className="w-full text-always-dark hover:scale-[1.02] transition-transform"
+                className="w-full hover:scale-[1.02] transition-transform"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="Enter a topic..."
@@ -123,7 +124,8 @@ const SonnetGenerator = ({ setIsLoading }) => {
                   fontSize: '1rem',
                   boxShadow: '6px 6px 0px 0px rgba(0, 0, 0, 0.2)',
                   transition: 'all 0.3s ease',
-                  outline: 'none'
+                  outline: 'none',
+                  color: '#2a2a2a'
                 }}
               />
 
@@ -180,31 +182,33 @@ const SonnetGenerator = ({ setIsLoading }) => {
                 }}
               >
                 <h3 
-                  className="text-2xl font-bold mb-6 text-center text-always-dark"
+                  className="text-2xl font-bold mb-6 text-center"
                   style={{ 
                     fontFamily: "'Press Start 2P', cursive",
-                    textShadow: '2px 2px 0 rgba(0,0,0,0.2)'
+                    textShadow: '2px 2px 0 rgba(0,0,0,0.2)',
+                    color: '#2a2a2a'
                   }}
                 >
                   A Sonnet on {currentSonnetTopic}
                 </h3>
                 
-                <div className="text-center text-ink text-2xl mb-4 opacity-75 text-always-dark">❝</div>
+                <div className="text-center text-2xl mb-4 opacity-75" style={{ color: '#2a2a2a' }}>❝</div>
                 
                 <div 
-                  className="whitespace-pre-line mx-auto text-center leading-relaxed text-always-dark"
+                  className="whitespace-pre-line mx-auto text-center leading-relaxed"
                   style={{ 
                     fontFamily: "'Crimson Text', serif",
                     fontSize: '1.25rem',
                     lineHeight: '1.6',
                     maxWidth: '85%',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+                    color: '#2a2a2a'
                   }}
                 >
                   {sonnet}
                 </div>
                 
-                <div className="text-center text-ink text-2xl mt-4 opacity-75 text-always-dark">❞</div>
+                <div className="text-center text-2xl mt-4 opacity-75" style={{ color: '#2a2a2a' }}>❞</div>
                 
                 <div className="flex justify-end w-full pr-8 mt-10">
                   <img 
