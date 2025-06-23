@@ -56,14 +56,14 @@ git clone https://github.com/yourusername/shakescribe
 cd shakescribe
 ```
 
-**2. Set Up the Frontend (The Pretty Part)**
+**2. Set Up the Frontend**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-**3. Set Up the Backend (The Smart Part)**
+**3. Set Up the Backend**
 ```bash
 cd backend
 npm install
@@ -71,7 +71,7 @@ npm install
 npm run dev
 ```
 
-**4. Set Up Analytics (The Really Smart Part)**
+**4. Set Up Analytics**
 ```bash
 cd analytics
 python -m venv venv
